@@ -1,7 +1,7 @@
 import '../style.css';
 import { createDeck, computerTurn, Player } from './usecases';
 
-export let players = {player: undefined, computer: undefined};
+export let players = { player: undefined, computer: undefined };
 
 const myModule = (() => {
     'use strict'
@@ -16,7 +16,7 @@ const myModule = (() => {
     const removeChild = (tag) => {
         tag.innerHTML = '';
     };
-    
+
     //Page configuration
     const btnAskCard = document.getElementById('btn-askCard'),
         btnStopHand = document.getElementById('btn-stopHand'),
@@ -28,7 +28,7 @@ const myModule = (() => {
         player = new Player(playerPointsDisplay, playerCards, gameDeck),
         computer = new Player(computerPointsDisplay, computerCard, gameDeck);
 
-        players = {player:player, computer: computer};
+    players = { player: player, computer: computer };
 
 
     const MESSAGES = (pPoints, cPoints) => ([
@@ -45,9 +45,11 @@ const myModule = (() => {
         btnAskCard.disabled = true;
         btnStopHand.disabled = true;
 
-        for (let condition of MESSAGES(playerPoints, computerPoints)) {
-            if (condition.condition) {
-                alert(condition.message);
+        for (const { condition, message } of MESSAGES(playerPoints, computerPoints)) {
+            console.log(condition, message);
+            if (condition) {
+                console.log(message);
+                alert(message);
                 return;
             }
         }
@@ -75,11 +77,15 @@ const myModule = (() => {
         btnAskCard.disabled = false;
         btnNewGame.disabled = false;
         btnStopHand.disabled = false;
-        
+
         startTurn();
     });
 
-    btnStopHand.addEventListener('click', () => computerTurn(player.points));
+    btnStopHand.addEventListener('click', () => {
+        computerTurn(player.points);
+        setTimeout(() =>
+            computeWinner(player.points, computer.points), 50);
+    });
 
     //Game start logic
     const startTurn = () => {
