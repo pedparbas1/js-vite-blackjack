@@ -1,6 +1,6 @@
 export { requestCard, cardValue, createCardImg as createCardImg};
 
-const CARD_ASSETS_POINTER = './public/assets/cards/';
+const CARD_ASSETS_POINTER = './assets/cards/';
 
 /**
  * 
